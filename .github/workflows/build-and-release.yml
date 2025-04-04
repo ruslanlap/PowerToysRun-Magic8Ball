@@ -188,9 +188,9 @@ jobs:
         id: release_notes
         run: |
           cat > release_notes.md << 'EOL'
-          # 🌦️ Magic 8-Ball Plugin v${{ steps.get_version.outputs.VERSION }}
+          # 🔮 Magic 8-Ball Plugin v${{ steps.get_version.outputs.VERSION }}
           
-          ![Magic 8-Ball Plugin Logo](https://raw.githubusercontent.com/ruslanlap/PowerToysRun-Magic8Ball/master/Assets/logo.png)
+          ![Magic 8-Ball Plugin Logo](https://raw.githubusercontent.com/ruslanlap/PowerToysRun-Magic8Ball/master/Assets/Images/logo.png)
           
           ## ✨ What's New
           

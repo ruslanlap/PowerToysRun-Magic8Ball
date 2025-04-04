@@ -1,10 +1,10 @@
 # 🔮 PowerToys Run: Magic 8-Ball Plugin
 
 <div align="center">
-  <img src="data/demo-magic8ball.gif" alt="Magic 8-Ball Plugin Demo" width="650">
+  <img src="Assets/Images/demo-magic8ball.gif" alt="Magic 8-Ball Plugin Demo" width="650">
   
   <p align="center">
-    <img src="data/logo.png" alt="Magic 8-Ball Icon" width="128" height="128">
+    <img src="Assets/Images/logo.png" alt="Magic 8-Ball Icon" width="128" height="128">
   </p>
   
   <h1>✨ Magic 8-Ball for PowerToys Run ✨</h1>
@@ -15,7 +15,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ![Maintenance](https://img.shields.io/maintenance/yes/2025)
   ![C#](https://img.shields.io/badge/C%23-.NET-512BD4)
-  ![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)
+  ![Version](https://img.shields.io/badge/version-v1.0.0-brightgreen)
   ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
   [![GitHub stars](https://img.shields.io/github/stars/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/stargazers)
   [![GitHub issues](https://img.shields.io/github/issues/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/issues)
@@ -57,7 +57,7 @@
 Magic 8-Ball is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/PowerToys) that brings the classic fortune-telling toy to your keyboard. Simply type `magic` followed by a yes-or-no question to receive a mystical response directly from your PowerToys Run interface.
 
 <div align="center">
-  <img src="data/instruction.png" alt="PowerToys" width="850">
+  <img src="Assets/Images/instruction.png" alt="PowerToys" width="850">
 </div>
 
 ## ⚡ Easy Install
@@ -93,15 +93,15 @@ Magic 8-Ball is a plugin for [Microsoft PowerToys Run](https://github.com/micros
 
 <div align="center">
   <h3>🎱 Ask a Question</h3>
-  <p><img src="data/demo-magic8ball-ask.gif" width="650" alt="Ask Question Demo"/></p>
+  <p><img src="Assets/Images/demo-magic8ball-ask.gif" width="650" alt="Ask Question Demo"/></p>
   <p><i>Simply type <code>magic</code> followed by your yes-or-no question</i></p>
   
   <h3>🧠 Biased Responses</h3>
-  <p><img src="data/demo-magic8ball-biased.gif" width="650" alt="Biased Response Demo"/></p>
+  <p><img src="Assets/Images/demo-magic8ball-biased.gif" width="650" alt="Biased Response Demo"/></p>
   <p><i>Use Ctrl+Enter to get a response that analyzes your question</i></p>
 
   <h3>🖼️ Magic 8-Ball Window</h3>
-  <p><img src="data/demo-magic8ball-window.gif" width="650" alt="Magic 8-Ball Window Demo"/></p>
+  <p><img src="Assets/Images/demo-magic8ball-window.gif" width="650" alt="Magic 8-Ball Window Demo"/></p>
   <p><i>View your fortune in a dedicated Magic 8-Ball window</i></p>
 </div>
 
