@@ -45,11 +45,6 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="2"/>
-                </Setter.Value>
-            </Setter>
         </Style>
     </Window.Resources>
 
@@ -60,9 +55,6 @@
                 <GradientStop Color="#1E1E1E" Offset="1.0"/>
             </LinearGradientBrush>
         </Border.Background>
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5"/>
-        </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -82,11 +74,7 @@
                            MaxHeight="300"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
-                           Margin="0,5,0,15">
-                        <Image.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="3"/>
-                        </Image.Effect>
-                    </Image>
+                           Margin="0,5,0,15"/>
                     <!-- Контейнер для анімації (відображається під час анімації) -->
                     <Border x:Name="AnimationContainer"
                             Background="Transparent"
@@ -99,18 +87,14 @@
                                       MediaEnded="BallAnimation_MediaEnded"
                                       Width="200"
                                       Height="200"
-                                      Stretch="Uniform">
-                            <MediaElement.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="3"/>
-                            </MediaElement.Effect>
-                        </MediaElement>
+                                      Stretch="Uniform"/>
                     </Border>
                     <!-- Трикутник з відповіддю -->
                     <Grid x:Name="AnswerTriangle"
-                          Width="300"
-                          Height="300"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"
+                          Width="300" 
+                          Height="300" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Center" 
                           Visibility="Collapsed">
                         <Polygon Opacity="0.8" Points="0,0 240,0 120,240">
                             <Polygon.Fill>
@@ -121,20 +105,14 @@
                             </Polygon.Fill>
                         </Polygon>
                         <TextBlock x:Name="AnswerText"
-                                   Text=""
+                                   Text="YES"
                                    FontSize="18"
                                    FontWeight="Bold"
                                    Foreground="White"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
-                                   MaxWidth="120"
-                                   Margin="60,30,60,120">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="1"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Margin="0,40,0,0"/>
                     </Grid>
                 </Grid>
 
@@ -164,11 +142,7 @@
                                FontSize="16"
                                FontWeight="SemiBold"
                                Foreground="#88CCFF"
-                               TextWrapping="Wrap">
-                        <TextBlock.Effect>
-                            <DropShadowEffect Color="#000033" BlurRadius="2" ShadowDepth="1"/>
-                        </TextBlock.Effect>
-                    </TextBlock>
+                               TextWrapping="Wrap"/>
                 </Grid>
                 <Grid Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
@@ -179,11 +153,7 @@
                     <TextBlock x:Name="ResponseTypeTextBlock"
                                Grid.Column="1"
                                FontSize="16"
-                               Foreground="#FFAA55">
-                        <TextBlock.Effect>
-                            <DropShadowEffect Color="#331100" BlurRadius="2" ShadowDepth="1"/>
-                        </TextBlock.Effect>
-                    </TextBlock>
+                               Foreground="#FFAA55"/>
                 </Grid>
             </StackPanel>
 
@@ -198,21 +168,13 @@
                         Content="Ask Again"
                         Margin="0,0,5,0"
                         Click="AskAgainButton_Click"
-                        Style="{StaticResource CustomButtonStyle}">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2"/>
-                    </Button.Effect>
-                </Button>
+                        Style="{StaticResource CustomButtonStyle}"/>
                 <Button x:Name="CloseButton"
                         Grid.Column="1"
                         Content="Close"
                         Margin="5,0,0,0"
                         Click="CloseButton_Click"
-                        Style="{StaticResource CustomButtonStyle}">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2"/>
-                    </Button.Effect>
-                </Button>
+                        Style="{StaticResource CustomButtonStyle}"/>
             </Grid>
         </Grid>
     </Border>

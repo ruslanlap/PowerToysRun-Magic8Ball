@@ -205,19 +205,8 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
                         displayText = SplitToFitTriangle(displayText);
                     }
 
-                    AnswerText.Text = displayText;
+                    ShowAnswer(displayText, response.Type);
                     ResponseTextBlock.Text = response.Reading;
-
-                    // Set response type with emoji
-                    string emoji = response.Type.ToLower() switch
-                    {
-                        "positive" => "✅ Positive",
-                        "negative" => "❌ Negative",
-                        "neutral" => "⚠️ Neutral",
-                        _ => "🔮 Unknown"
-                    };
-
-                    ResponseTypeTextBlock.Text = emoji;
 
                     // Clean up
                     apiService.Dispose();
@@ -225,18 +214,43 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
                 else
                 {
                     // Handle error
-                    AnswerText.Text = "ERROR";
+                    ShowAnswer("ERROR", "Unknown");
                     ResponseTextBlock.Text = "Could not get a response. Please try again later.";
-                    ResponseTypeTextBlock.Text = "❌ Error";
                 }
             }
             catch (Exception ex)
             {
                 // Handle exception
-                AnswerText.Text = "ERROR";
+                ShowAnswer("ERROR", "Unknown");
                 ResponseTextBlock.Text = $"An error occurred: {ex.Message}";
-                ResponseTypeTextBlock.Text = "❌ Error";
             }
+        }
+
+        private void ShowAnswer(string answer, string responseType)
+        {
+            // Hide animation if it was playing
+            AnimationContainer.Visibility = Visibility.Collapsed;
+            
+            // Show static image and answer triangle
+            StaticBallImage.Visibility = Visibility.Visible;
+            AnswerTriangle.Visibility = Visibility.Visible;
+            
+            // Set answer text
+            AnswerText.Text = SplitToFitTriangle(answer);
+            
+            // Update response text and type
+            ResponseTextBlock.Text = answer;
+            
+            // Set response type with emoji
+            string emoji = responseType.ToLower() switch
+            {
+                "positive" => "✅",
+                "negative" => "❌",
+                "neutral" => "⚠️",
+                _ => "❓"
+            };
+            
+            ResponseTypeTextBlock.Text = $"{emoji} {responseType}";
         }
 
         private string SplitToFitTriangle(string text)
