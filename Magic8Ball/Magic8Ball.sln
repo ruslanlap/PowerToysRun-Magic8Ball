@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.PowerToys.Run.Plugin.Magic8Ball", "Community.PowerToys.Run.Plugin.Magic8Ball\Community.PowerToys.Run.Plugin.Magic8Ball.csproj", "{6691677A-21E3-4B82-9034-B932ED91A877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.PowerToys.Run.Plugin.Magic8Ball.UnitTests", "Community.PowerToys.Run.Plugin.Magic8Ball.UnitTests\Community.PowerToys.Run.Plugin.Magic8Ball.UnitTests.csproj", "{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Debug|x64.ActiveCfg = Debug|x64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Debug|x64.Build.0 = Debug|x64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Release|ARM64.Build.0 = Release|ARM64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Release|x64.ActiveCfg = Release|x64
+		{6691677A-21E3-4B82-9034-B932ED91A877}.Release|x64.Build.0 = Release|x64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Debug|ARM64.Build.0 = Debug|ARM64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Debug|x64.ActiveCfg = Debug|x64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Debug|x64.Build.0 = Debug|x64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Release|ARM64.ActiveCfg = Release|ARM64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Release|ARM64.Build.0 = Release|ARM64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Release|x64.ActiveCfg = Release|x64
+		{32B0B3CC-AF1C-46E7-9C53-9ED92B8DDDD8}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF61D83F-1A11-49DA-BFE9-6E6544A1F6B4}
+	EndGlobalSection
+EndGlobal

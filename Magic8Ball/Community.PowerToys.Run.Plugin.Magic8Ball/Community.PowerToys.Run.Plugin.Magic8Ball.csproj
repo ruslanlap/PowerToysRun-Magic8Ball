@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64;ARM64</Platforms>
+    <Nullable>enable</Nullable>
+    <UseWindowsSdk>true</UseWindowsSdk>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Community.PowerToys.Run.Plugin.Magic8Ball</RootNamespace>
+    <AssemblyName>Community.PowerToys.Run.Plugin.Magic8Ball</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Community.PowerToys.Run.Plugin.Dependencies" Version="0.90.0" />
+  </ItemGroup>
+  <!-- Include source files with paths relative to project file -->
+  <ItemGroup>
+    <Compile Include="Magic8BallResultWindow.xaml.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="..\Models\EightBallResponse.cs" />
+    <Compile Include="..\Services\EightBallApiService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Images\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Images\*.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\*.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Magic8BallResultWindow.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+{
+  "ID": "3BBD724C46964C4187B055A94E7E6852",
+  "ActionKeyword": "magic",
+  "IsGlobal": false,
+  "Name": "Magic8Ball",
+  "Author": "ruslanlap",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/ruslanlap/Community.PowerToys.Run.Plugin.Magic8Ball",
+  "ExecuteFileName": "Community.PowerToys.Run.Plugin.Magic8Ball.dll",
+  "IcoPathDark": "Images\\magic8ball.dark.png",
+  "IcoPathLight": "Images\\magic8ball.light.png",
+  "DynamicLoading": false
+}
