@@ -253,10 +253,10 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
                 return text.Length > 15 ? text.Substring(0, 12) + "..." : text;
             }
 
-            // Try to balance the lines
+            // Try to balance the lines for better visual appearance
             var result = new System.Text.StringBuilder();
             int currentLineLength = 0;
-            int maxLineLength = 10; // Shorter lines for triangle
+            int maxLineLength = 12; // Shorter lines for triangle
             int lineCount = 0;
             
             for (int i = 0; i < words.Length; i++)
@@ -265,17 +265,21 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
 
                 // If adding this word would exceed max line length or we already have 3 lines
                 if ((currentLineLength + word.Length > maxLineLength) || 
-                    (currentLineLength > 0 && lineCount >= 3))
+                    (currentLineLength > 0 && lineCount >= 2))
                 {
                     // Start a new line
                     result.Append("\n");
                     currentLineLength = 0;
                     lineCount++;
                     
-                    // Limit to 4 lines maximum to fit in triangle
-                    if (lineCount >= 4)
+                    // Limit to 3 lines maximum to fit in triangle
+                    if (lineCount >= 3)
                     {
-                        result.Append("...");
+                        // If we're cutting off, add ellipsis
+                        if (i < words.Length - 1)
+                        {
+                            result.Append("...");
+                        }
                         break;
                     }
                 }
