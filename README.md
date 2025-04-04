@@ -93,16 +93,9 @@ Magic 8-Ball is a plugin for [Microsoft PowerToys Run](https://github.com/micros
 
 <div align="center">
   <h3>🎱 Ask a Question</h3>
-  <p><img src="Assets/Images/demo-magic8ball-ask.gif" width="650" alt="Ask Question Demo"/></p>
+  <p><img src="Assets/Images/demo-magic8ball.gif" width="650" alt="Ask Question Demo"/></p>
   <p><i>Simply type <code>magic</code> followed by your yes-or-no question</i></p>
   
-  <h3>🧠 Biased Responses</h3>
-  <p><img src="Assets/Images/demo-magic8ball-biased.gif" width="650" alt="Biased Response Demo"/></p>
-  <p><i>Use Ctrl+Enter to get a response that analyzes your question</i></p>
-
-  <h3>🖼️ Magic 8-Ball Window</h3>
-  <p><img src="Assets/Images/demo-magic8ball-window.gif" width="650" alt="Magic 8-Ball Window Demo"/></p>
-  <p><i>View your fortune in a dedicated Magic 8-Ball window</i></p>
 </div>
 
 ## 🚀 Installation
