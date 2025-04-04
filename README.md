@@ -15,7 +15,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ![Maintenance](https://img.shields.io/maintenance/yes/2025)
   ![C#](https://img.shields.io/badge/C%23-.NET-512BD4)
-  ![Version](https://img.shields.io/badge/version-v1.0.1-brightgreen)
+  ![Version](https://img.shields.io/badge/version-v1.0.2-brightgreen)
   ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
   [![GitHub stars](https://img.shields.io/github/stars/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/stargazers)
   [![GitHub issues](https://img.shields.io/github/issues/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/issues)
@@ -26,10 +26,10 @@
 </div>
 
 <div align="center">
-  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.1/Magic8Ball-x64.zip">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.2/Magic8Ball-x64.zip">
     <img src="https://img.shields.io/badge/Download%20Latest%20Release-x64-blue?style=for-the-badge&logo=github" alt="Download Latest Release" />
   </a>
-  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.1/Magic8Ball-ARM64.zip">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.2/Magic8Ball-ARM64.zip">
     <img src="https://img.shields.io/badge/Download%20Latest%20Release-ARM64-blue?style=for-the-badge&logo=github" alt="Download Latest Release" />
   </a>
 </div>
@@ -63,7 +63,7 @@ Magic 8-Ball is a plugin for [Microsoft PowerToys Run](https://github.com/micros
 ## ⚡ Easy Install
 
 <div align="">
-  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.1/Magic8Ball-x64.zip">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.2/Magic8Ball-x64.zip">
     <img src="https://img.shields.io/badge/⬇️_DOWNLOAD-MAGIC_8_BALL_PLUGIN-blue?style=for-the-badge&logo=github" alt="Download Magic 8-Ball Plugin">
   </a>
   

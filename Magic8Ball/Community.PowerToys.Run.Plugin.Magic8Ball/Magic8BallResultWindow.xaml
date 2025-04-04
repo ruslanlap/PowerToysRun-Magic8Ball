@@ -51,8 +51,8 @@
     <Border Margin="10" Padding="20" CornerRadius="8">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#2D2D30" Offset="0.0"/>
-                <GradientStop Color="#1E1E1E" Offset="1.0"/>
+                <GradientStop Color="#232324" Offset="0.0"/>
+                <GradientStop Color="#232324" Offset="1.0"/>
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
@@ -91,21 +91,21 @@
                     </Border>
                     <!-- Трикутник з відповіддю -->
                     <Grid x:Name="AnswerTriangle"
-                          Width="300" 
-                          Height="300" 
+                          Width="160" 
+                          Height="160" 
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Center" 
                           Visibility="Collapsed">
-                        <Polygon Opacity="0.8" Points="0,0 240,0 120,240">
+                        <Polygon Opacity="0.8" Points="0,0 160,0 80,160">
                             <Polygon.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <GradientStop Color="#000088" Offset="0"/>
                                     <GradientStop Color="#4444CC" Offset="1"/>
                                 </LinearGradientBrush>
                             </Polygon.Fill>
                         </Polygon>
                         <TextBlock x:Name="AnswerText"
-                                   Text="YES"
+                                   Text=""
                                    FontSize="18"
                                    FontWeight="Bold"
                                    Foreground="White"
