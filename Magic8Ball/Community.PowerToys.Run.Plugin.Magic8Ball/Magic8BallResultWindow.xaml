@@ -2,35 +2,87 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Magic 8-Ball"
-        Height="560"
-        Width="400"
+        Height="580"
+        Width="420"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="#1E1E1E">
+        Background="#1E1E1E"
+        KeyDown="Window_KeyDown">
     <Window.Resources>
-        <!-- Стиль для кнопок -->
+        <!-- Color Palette -->
+        <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="#232324"/>
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="White"/>
+        <SolidColorBrush x:Key="TriangleStartColor" Color="#000088"/>
+        <SolidColorBrush x:Key="TriangleEndColor" Color="#4444CC"/>
+        <SolidColorBrush x:Key="QuestionTextBrush" Color="#FFCC00"/>
+        <SolidColorBrush x:Key="ResponseTextBrush" Color="#88CCFF"/>
+        <SolidColorBrush x:Key="TypeTextBrush" Color="#FFAA55"/>
+        <SolidColorBrush x:Key="SeparatorBrush" Color="#333333"/>
+        <SolidColorBrush x:Key="ContentTextBrush" Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#3A3A3D"/>
+        <SolidColorBrush x:Key="ButtonHoverBrush" Color="#505050"/>
+        <SolidColorBrush x:Key="ButtonPressedBrush" Color="#707070"/>
+        <SolidColorBrush x:Key="ButtonDisabledBrush" Color="#2D2D30"/>
+        <SolidColorBrush x:Key="ButtonDisabledTextBrush" Color="#888888"/>
+
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="CardBackgroundGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#232324" Offset="0.0"/>
+            <GradientStop Color="#1D1D1E" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="TriangleGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#000088" Offset="0"/>
+            <GradientStop Color="#4444CC" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Shadow Effects -->
+        <DropShadowEffect x:Key="CardShadow" ShadowDepth="6" Direction="270" Opacity="0.5" BlurRadius="12"/>
+        <DropShadowEffect x:Key="ButtonShadow" ShadowDepth="2" Direction="270" Opacity="0.3" BlurRadius="4"/>
+        <DropShadowEffect x:Key="ButtonPressedShadow" ShadowDepth="1" Direction="270" Opacity="0.2" BlurRadius="2"/>
+        <DropShadowEffect x:Key="TriangleShadow" ShadowDepth="5" Direction="270" Opacity="0.5" BlurRadius="10"/>
+
+        <!-- Button Style -->
         <Style x:Key="CustomButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#3A3A3D"/>
+            <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle StrokeThickness="2" Stroke="#4444CC" 
+                                               StrokeDashArray="1 2" Margin="-2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4"
+                                Effect="{StaticResource ButtonShadow}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#505050"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#707070"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPressedBrush}"/>
+                                <Setter TargetName="border" Property="Effect" Value="{StaticResource ButtonPressedShadow}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Background" Value="#2D2D30"/>
-                                <Setter Property="Foreground" Value="#888888"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonDisabledTextBrush}"/>
+                                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -38,23 +90,99 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для заголовка -->
+        <!-- Header Style -->
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="32"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.4" BlurRadius="4"/>
+                </Setter.Value>
+            </Setter>
         </Style>
+
+        <!-- Section Label Style -->
+        <Style x:Key="SectionLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <!-- Animations -->
+        <Storyboard x:Key="LoadingAnimation">
+            <DoubleAnimation 
+                Storyboard.TargetName="LoadingSpinnerRotation" 
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:1" 
+                RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <Storyboard x:Key="BallShakeAnimation">
+            <!-- Horizontal shaking -->
+            <DoubleAnimation 
+                Storyboard.TargetName="BallShakeTransform" 
+                Storyboard.TargetProperty="X"
+                From="-8" To="8" Duration="0:0:0.05" 
+                AutoReverse="True"
+                RepeatBehavior="8x">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Vertical shaking -->
+            <DoubleAnimation 
+                Storyboard.TargetName="BallShakeTransform" 
+                Storyboard.TargetProperty="Y"
+                From="-5" To="5" Duration="0:0:0.07" 
+                AutoReverse="True"
+                RepeatBehavior="6x">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Slight rotation for realistic feel -->
+            <DoubleAnimation 
+                Storyboard.TargetName="BallRotateTransform" 
+                Storyboard.TargetProperty="Angle"
+                From="-2" To="2" Duration="0:0:0.1" 
+                AutoReverse="True"
+                RepeatBehavior="4x">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="TriangleEntranceAnimation">
+            <DoubleAnimation 
+                Storyboard.TargetName="AnswerTriangle" 
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="1" Duration="0:0:0.3"/>
+            <DoubleAnimation 
+                Storyboard.TargetName="TriangleScaleTransform" 
+                Storyboard.TargetProperty="ScaleX"
+                From="0.8" To="1" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0.3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation 
+                Storyboard.TargetName="TriangleScaleTransform" 
+                Storyboard.TargetProperty="ScaleY"
+                From="0.8" To="1" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0.3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Window.Resources>
 
-    <Border Margin="10" Padding="20" CornerRadius="8">
-        <Border.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#232324" Offset="0.0"/>
-                <GradientStop Color="#232324" Offset="1.0"/>
-            </LinearGradientBrush>
-        </Border.Background>
+    <Border Margin="10" Padding="20" CornerRadius="12" 
+            Background="{StaticResource CardBackgroundGradient}"
+            Effect="{StaticResource CardShadow}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -63,101 +191,210 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
-            <TextBlock Grid.Row="0" Text="Magic 8-Ball" Style="{StaticResource HeaderTextStyle}"/>
+            <!-- Header -->
+            <TextBlock Grid.Row="0" Text="Magic 8-Ball" Style="{StaticResource HeaderTextStyle}"
+                       AutomationProperties.Name="Magic 8-Ball Window Title"/>
 
-                <!-- Область анімації/відображення 8-Ball -->
-                <Grid Grid.Row="1" Margin="10,0,10,0">
-                    <!-- Статичне зображення 8-Ball -->
-                    <Image x:Name="StaticBallImage"
-                           Stretch="Uniform"
-                           MaxHeight="300"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           Margin="0,5,0,15"/>
-                    <!-- Контейнер для анімації (відображається під час анімації) -->
-                    <Border x:Name="AnimationContainer"
-                            Background="Transparent"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Visibility="Collapsed">
-                        <MediaElement x:Name="BallAnimation"
-                                      LoadedBehavior="Manual"
-                                      UnloadedBehavior="Stop"
-                                      MediaEnded="BallAnimation_MediaEnded"
-                                      Width="200"
-                                      Height="200"
-                                      Stretch="Uniform"/>
-                    </Border>
-                    <!-- Трикутник з відповіддю -->
-                    <Grid x:Name="AnswerTriangle"
-                          Width="160" 
-                          Height="160" 
-                          VerticalAlignment="Center" 
-                          HorizontalAlignment="Center" 
-                          Visibility="Collapsed">
-                        <Polygon Opacity="0.8" Points="0,0 160,0 80,160">
-                            <Polygon.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#000088" Offset="0"/>
-                                    <GradientStop Color="#4444CC" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Polygon.Fill>
-                        </Polygon>
+            <!-- 8-Ball and Answer Display Area -->
+            <!-- Змінюємо Grid з областю кулі, щоб забезпечити ідеальне центрування -->
+            <Grid Grid.Row="1" Margin="0" x:Name="BallDisplayArea" MouseDown="BallDisplayArea_MouseDown"
+                  Cursor="Hand">
+                <!-- Drop Shadow for 8-Ball - відцентрований ідеально -->
+                <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center"
+                         Width="280" Height="280" Fill="#00000000">
+                    <Ellipse.Effect>
+                        <DropShadowEffect ShadowDepth="8" BlurRadius="15" Opacity="0.6" Direction="270"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!-- Static 8-Ball Image з вирівняними відступами -->
+                <Image x:Name="StaticBallImage"
+                       Stretch="Uniform"
+                       MaxHeight="280"
+                       MaxWidth="280"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="0"
+                       ToolTip="Click to shake the Magic 8-Ball"
+                       AutomationProperties.Name="Magic 8-Ball Image">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform x:Name="BallShakeTransform" X="0" Y="0"/>
+                            <RotateTransform x:Name="BallRotateTransform" Angle="0" CenterX="140" CenterY="140"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+                <!-- Loading Spinner - також відцентрований -->
+                <Grid x:Name="LoadingSpinner" Visibility="Collapsed"
+                      Width="80" Height="80"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      AutomationProperties.Name="Loading Animation">
+                    <Grid.RenderTransform>
+                        <RotateTransform x:Name="LoadingSpinnerRotation" CenterX="40" CenterY="40"/>
+                    </Grid.RenderTransform>
+                    <!-- Outer Circle -->
+                    <Ellipse Width="80" Height="80" StrokeThickness="4" Fill="Transparent">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#4444CC" Offset="0"/>
+                                <GradientStop Color="#0000AA" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                    </Ellipse>
+                    <!-- Knob -->
+                    <Ellipse Width="12" Height="12" Fill="#4444CC" 
+                             VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                </Grid>
+
+                <!-- Animation Container (legacy support) -->
+                <Border x:Name="AnimationContainer"
+                        Background="Transparent"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Visibility="Collapsed">
+                    <MediaElement x:Name="BallAnimation"
+                                  LoadedBehavior="Manual"
+                                  UnloadedBehavior="Stop"
+                                  MediaEnded="BallAnimation_MediaEnded"
+                                  Width="200"
+                                  Height="200"
+                                  Stretch="Uniform"/>
+                </Border>
+
+                <!-- Answer Triangle with Modern Design -->
+                <Grid x:Name="AnswerTriangle"
+                      Width="180" 
+                      Height="180" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" 
+                      Visibility="Collapsed"
+                      Opacity="0"
+                      AutomationProperties.Name="Magic 8-Ball Answer">
+                    <Grid.RenderTransform>
+                        <ScaleTransform x:Name="TriangleScaleTransform" ScaleX="1" ScaleY="1" CenterX="90" CenterY="90"/>
+                    </Grid.RenderTransform>
+                    <!-- Drop Shadow Effect for Triangle -->
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="5" Direction="270" Opacity="0.5" BlurRadius="10"/>
+                    </Grid.Effect>
+
+                    <!-- Triangle with Rounded Corners -->
+                    <Path Fill="{StaticResource TriangleGradient}" Opacity="0.95">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0" IsClosed="True">
+                                    <LineSegment Point="180,0"/>
+                                    <BezierSegment Point1="175,60" Point2="155,120" Point3="90,180"/>
+                                    <BezierSegment Point1="25,120" Point2="5,60" Point3="0,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+
+                    <!-- Glow Effect Overlay -->
+                    <Path Opacity="0.3" StrokeThickness="0">
+                        <Path.Fill>
+                            <RadialGradientBrush Center="0.5,0.3" RadiusX="0.7" RadiusY="0.7">
+                                <GradientStop Color="#FFFFFF" Offset="0"/>
+                                <GradientStop Color="#0000FF" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Path.Fill>
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0" IsClosed="True">
+                                    <LineSegment Point="180,0"/>
+                                    <BezierSegment Point1="175,60" Point2="155,120" Point3="90,180"/>
+                                    <BezierSegment Point1="25,120" Point2="5,60" Point3="0,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+
+                    <!-- Multi-line Text Block instead of Viewbox -->
+                    <Border Width="120" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0">
                         <TextBlock x:Name="AnswerText"
-                                   Text=""
-                                   FontSize="18"
                                    FontWeight="Bold"
+                                   FontSize="20"
                                    Foreground="White"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    TextAlignment="Center"
-                                   Margin="0,40,0,0"/>
+                                   TextWrapping="Wrap"
+                                   LineHeight="24">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="1" Direction="320" Opacity="0.8" BlurRadius="2"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <!-- Question and Response Section -->
+            <Border Grid.Row="2" Margin="0,5,0,15" Padding="15" 
+                    Background="#1A1A1A" CornerRadius="8" BorderThickness="1" 
+                    BorderBrush="#333333">
+                <StackPanel>
+                    <!-- Question Section -->
+                    <Grid Margin="0,5,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Question:" 
+                                 Style="{StaticResource SectionLabelStyle}" 
+                                 Foreground="{StaticResource QuestionTextBrush}"
+                                 AutomationProperties.Name="Question Label"/>
+                        <TextBlock x:Name="QuestionTextBlock"
+                                 Grid.Column="1"
+                                 FontSize="18"
+                                 Foreground="{StaticResource ContentTextBrush}"
+                                 TextWrapping="Wrap"
+                                 AutomationProperties.Name="Question Text"/>
                     </Grid>
-                </Grid>
 
-            <!-- Секція з питанням та відповіддю -->
-            <StackPanel Grid.Row="2" Margin="0,5,0,15">
-                <Grid Margin="0,5,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Question:" FontSize="16" FontWeight="SemiBold" Foreground="#FFCC00" Margin="0,0,10,0" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="QuestionTextBlock"
-                               Grid.Column="1"
-                               FontSize="16"
-                               Foreground="#E0E0E0"
-                               TextWrapping="Wrap"/>
-                </Grid>
-                <Border BorderBrush="#333333" BorderThickness="0,1,0,0" Margin="0,0,0,10"/>
-                <Grid Margin="0,5,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Response:" FontSize="16" FontWeight="SemiBold" Foreground="#88CCFF" Margin="0,0,10,0" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="ResponseTextBlock"
-                               Grid.Column="1"
-                               FontSize="16"
-                               FontWeight="SemiBold"
-                               Foreground="#88CCFF"
-                               TextWrapping="Wrap"/>
-                </Grid>
-                <Grid Margin="0,5,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Type:" FontSize="16" FontWeight="SemiBold" Foreground="#FFAA55" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="ResponseTypeTextBlock"
-                               Grid.Column="1"
-                               FontSize="16"
-                               Foreground="#FFAA55"/>
-                </Grid>
-            </StackPanel>
+                    <!-- Separator -->
+                    <Border BorderBrush="{StaticResource SeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,10"/>
 
-            <!-- Кнопки -->
+                    <!-- Response Section -->
+                    <Grid Margin="0,5,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Response:" 
+                                 Style="{StaticResource SectionLabelStyle}" 
+                                 Foreground="{StaticResource ResponseTextBrush}"
+                                 AutomationProperties.Name="Response Label"/>
+                        <TextBlock x:Name="ResponseTextBlock"
+                                 Grid.Column="1"
+                                 FontSize="18"
+                                 FontWeight="SemiBold"
+                                 Foreground="{StaticResource ResponseTextBrush}"
+                                 TextWrapping="Wrap"
+                                 AutomationProperties.Name="Response Text"/>
+                    </Grid>
+
+                    <!-- Type Section -->
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Type:" 
+                                 Style="{StaticResource SectionLabelStyle}" 
+                                 Foreground="{StaticResource TypeTextBrush}"
+                                 AutomationProperties.Name="Type Label"/>
+                        <TextBlock x:Name="ResponseTypeTextBlock"
+                                 Grid.Column="1"
+                                 FontSize="18"
+                                 Foreground="{StaticResource TypeTextBrush}"
+                                 AutomationProperties.Name="Response Type"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Buttons -->
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -168,13 +405,19 @@
                         Content="Ask Again"
                         Margin="0,0,5,0"
                         Click="AskAgainButton_Click"
-                        Style="{StaticResource CustomButtonStyle}"/>
+                        Style="{StaticResource CustomButtonStyle}"
+                        ToolTip="Ask the Magic 8-Ball another question (Enter)"
+                        AutomationProperties.Name="Ask Again Button"
+                        IsDefault="True"/>
                 <Button x:Name="CloseButton"
                         Grid.Column="1"
                         Content="Close"
                         Margin="5,0,0,0"
                         Click="CloseButton_Click"
-                        Style="{StaticResource CustomButtonStyle}"/>
+                        Style="{StaticResource CustomButtonStyle}"
+                        ToolTip="Close this window (Esc)"
+                        AutomationProperties.Name="Close Button"
+                        IsCancel="True"/>
             </Grid>
         </Grid>
     </Border>

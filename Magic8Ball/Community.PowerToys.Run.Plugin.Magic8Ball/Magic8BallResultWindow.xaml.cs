@@ -4,12 +4,18 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Input;
 using Community.PowerToys.Run.Plugin.Magic8Ball.Models;
+using System.Threading.Tasks;
 
 namespace Community.PowerToys.Run.Plugin.Magic8Ball
 {
+    /// <summary>
+    /// Interaction logic for Magic8BallResultWindow.xaml
+    /// </summary>
     public partial class Magic8BallResultWindow : Window
     {
+        #region Fields
         private string _question = string.Empty;
         private bool _useBiasedResponse;
         private Main _pluginInstance;
@@ -18,30 +24,46 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
         private bool _enableAnimations;
         private bool _enableSoundEffects;
 
+        // Animation storyboards - marked as nullable
+        private Storyboard? _loadingAnimation;
+        private Storyboard? _triangleEntranceAnimation;
+        private Storyboard? _ballShakeAnimation;
+
+        // Animation timings - reduced by 20%
+        private const int ShakeDurationMs = 1200;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Initializes a new instance of the Magic8BallResultWindow
+        /// </summary>
+        /// <param name="pluginInstance">The main plugin instance</param>
         public Magic8BallResultWindow(Main pluginInstance)
         {
             InitializeComponent();
-            _pluginInstance = pluginInstance;
-            _soundPlayer = new MediaPlayer();
 
-            // Get settings from the plugin instance
+            // Initialize fields
+            _pluginInstance = pluginInstance ?? throw new ArgumentNullException(nameof(pluginInstance));
+            _soundPlayer = new MediaPlayer();
             _enableAnimations = pluginInstance.EnableAnimations;
             _enableSoundEffects = pluginInstance.EnableSoundEffects;
 
-            // Initialize with static image
-            var assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
-            if (assemblyDirectory != null)
-            {
-                var imagePath = Path.Combine(assemblyDirectory, "Images", "magic8ball.dark.png");
+            // Get animations from resources - using safe null handling
+            _loadingAnimation = FindResource("LoadingAnimation") as Storyboard;
+            _triangleEntranceAnimation = FindResource("TriangleEntranceAnimation") as Storyboard;
+            _ballShakeAnimation = FindResource("BallShakeAnimation") as Storyboard;
 
-                if (File.Exists(imagePath))
-                {
-                    StaticBallImage.Source = new BitmapImage(new Uri(imagePath));
-                }
-            }
+            // Load static 8-ball image
+            LoadStaticImage();
         }
+        #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// Sets the question and begins the Magic 8-Ball animation
+        /// </summary>
+        /// <param name="question">The user's question</param>
+        /// <param name="useBiasedResponse">Whether to use the biased response API</param>
         public void SetQuestion(string question, bool useBiasedResponse)
         {
             _question = question;
@@ -51,171 +73,246 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
             // Hide answer triangle initially
             AnswerTriangle.Visibility = Visibility.Collapsed;
 
-            // Immediately start animation
-            StartAnimation();
+            // Start animation sequence
+            StartAnimationSequence();
         }
+        #endregion
 
-        private void StartAnimation()
-        {
-            _isAnimating = true;
+        #region Private Methods
 
-            // Hide static image and show animation only if animations are enabled
-            StaticBallImage.Visibility = Visibility.Collapsed;
-            AnimationContainer.Visibility = _enableAnimations ? Visibility.Visible : Visibility.Collapsed;
-
-            // Play shake sound if available and if sound effects are enabled
-            if (_enableSoundEffects)
-            {
-                PlayShakeSound();
-            }
-
-            // Only load the GIF if animations are enabled
-            if (_enableAnimations)
-            {
-                var assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
-                if (assemblyDirectory != null)
-                {
-                    var imagePath = Path.Combine(assemblyDirectory, "Images", "magic8ball.gif");
-                    if (File.Exists(imagePath))
-                    {
-                        // For a MediaElement, use Uri directly
-                        BallAnimation.Source = new Uri(imagePath);
-                        BallAnimation.Play(); // Make sure to play the media
-                    }
-                }
-
-                // Simulate animation with ball movement (since GIF loading is complex in WPF)
-                // We'll use a StoryBoard to create the shaking effect
-                var shakeAnimation = new Storyboard();
-
-                // Create a TranslateTransform for the ball
-                var translateTransform = new TranslateTransform();
-                BallAnimation.RenderTransform = translateTransform;
-
-                // Add horizontal animation
-                var horizontalAnimation = new DoubleAnimation
-                {
-                    From = -10,
-                    To = 10,
-                    Duration = TimeSpan.FromMilliseconds(50),
-                    AutoReverse = true,
-                    RepeatBehavior = new RepeatBehavior(10) // Shake 10 times
-                };
-
-                Storyboard.SetTarget(horizontalAnimation, BallAnimation);
-                Storyboard.SetTargetProperty(horizontalAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.X)"));
-                shakeAnimation.Children.Add(horizontalAnimation);
-
-                // Add vertical animation
-                var verticalAnimation = new DoubleAnimation
-                {
-                    From = -5,
-                    To = 5,
-                    Duration = TimeSpan.FromMilliseconds(75),
-                    AutoReverse = true,
-                    RepeatBehavior = new RepeatBehavior(7) // Shake 7 times
-                };
-
-                Storyboard.SetTarget(verticalAnimation, BallAnimation);
-                Storyboard.SetTargetProperty(verticalAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
-                shakeAnimation.Children.Add(verticalAnimation);
-
-                // Set completion action
-                shakeAnimation.Completed += (s, e) => 
-                {
-                    AnimationContainer.Visibility = Visibility.Collapsed;
-                    StaticBallImage.Visibility = Visibility.Visible;
-                    AnswerTriangle.Visibility = Visibility.Visible;
-                    _isAnimating = false;
-
-                    // Get a response from the API
-                    GetResponseFromApi();
-                };
-
-                // Start animation
-                shakeAnimation.Begin();
-            }
-            else
-            {
-                // If animations are disabled, skip directly to getting the response
-                AnswerTriangle.Visibility = Visibility.Visible;
-                _isAnimating = false; // Make sure this is reset even when animations are disabled
-                GetResponseFromApi();
-            }
-        }
-
-        private void PlayShakeSound()
+        #region Resource Loading
+        /// <summary>
+        /// Loads the static 8-ball image
+        /// </summary>
+        private void LoadStaticImage()
         {
             try
             {
-                var assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
-                if (assemblyDirectory != null)
+                string? imagePath = GetResourcePath("Images", "magic8ball.dark.png");
+                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
                 {
-                    // Check for shake.wav first, then fall back to magic.wav if needed
-                    var soundPath = Path.Combine(assemblyDirectory, "Sounds", "shake.wav");
-
-                    if (!File.Exists(soundPath))
-                    {
-                        // Try the alternative sound file if the primary one doesn't exist
-                        soundPath = Path.Combine(assemblyDirectory, "Sounds", "magic.wav");
-                    }
-
-                    if (File.Exists(soundPath))
-                    {
-                        _soundPlayer.Open(new Uri(soundPath));
-                        _soundPlayer.Play();
-                    }
+                    StaticBallImage.Source = new BitmapImage(new Uri(imagePath));
                 }
             }
             catch (Exception ex)
             {
-                // Log the error but continue
+                System.Diagnostics.Debug.WriteLine($"Error loading static image: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets the full path to a resource file
+        /// </summary>
+        /// <param name="folder">The resource folder</param>
+        /// <param name="fileName">The resource file name</param>
+        /// <returns>The full path to the resource</returns>
+        private string? GetResourcePath(string folder, string fileName)
+        {
+            try
+            {
+                var assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+
+                if (assemblyDirectory != null)
+                {
+                    return Path.Combine(assemblyDirectory, folder, fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting resource path: {ex.Message}");
+            }
+
+            return null;
+        }
+        #endregion
+
+        #region Animation and UI
+        /// <summary>
+        /// Starts the animation sequence for the Magic 8-Ball
+        /// </summary>
+        private void StartAnimationSequence()
+        {
+            _isAnimating = true;
+
+            // Disable Ask Again button during animation
+            AskAgainButton.IsEnabled = false;
+
+            // Hide answer triangle initially
+            AnswerTriangle.Visibility = Visibility.Collapsed;
+
+            if (_enableAnimations)
+            {
+                // Play ball shaking animation
+                _ballShakeAnimation?.Begin();
+
+                // Show and start loading spinner animation
+                LoadingSpinner.Visibility = Visibility.Visible;
+                _loadingAnimation?.Begin();
+
+                // Play shake sound if enabled
+                if (_enableSoundEffects)
+                {
+                    PlayShakeSound();
+                }
+
+                // Simulate shaking with async delay
+                SimulateShakingAnimation();
+            }
+            else
+            {
+                // Skip directly to getting the response if animations are disabled
+                GetResponseFromApiAsync();
+            }
+        }
+
+        /// <summary>
+        /// Simulates the shaking animation with a timed delay
+        /// </summary>
+        private async void SimulateShakingAnimation()
+        {
+            try
+            {
+                // Use await Task.Delay for better async behavior
+                await Task.Delay(ShakeDurationMs);
+
+                // Only proceed if we're still in animating state
+                if (_isAnimating)
+                {
+                    // Hide spinner animation
+                    LoadingSpinner.Visibility = Visibility.Collapsed;
+                    _loadingAnimation?.Stop();
+
+                    // Reset ball position after shake
+                    BallShakeTransform.X = 0;
+                    BallShakeTransform.Y = 0;
+                    BallRotateTransform.Angle = 0;
+
+                    // Get the response
+                    GetResponseFromApiAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in shake animation: {ex.Message}");
+                // Fall back to getting response directly
+                GetResponseFromApiAsync();
+            }
+        }
+
+        /// <summary>
+        /// Plays the shake sound effect
+        /// </summary>
+        private void PlayShakeSound()
+        {
+            try
+            {
+                string? soundPath = GetResourcePath("Sounds", "shake.wav");
+
+                // Fall back to alternate sound if primary doesn't exist
+                if (string.IsNullOrEmpty(soundPath) || !File.Exists(soundPath))
+                {
+                    soundPath = GetResourcePath("Sounds", "magic.wav");
+                }
+
+                if (!string.IsNullOrEmpty(soundPath) && File.Exists(soundPath))
+                {
+                    _soundPlayer.Open(new Uri(soundPath));
+                    _soundPlayer.MediaFailed += (s, e) => 
+                        System.Diagnostics.Debug.WriteLine($"Media failed: {e.ErrorException.Message}");
+                    _soundPlayer.Play();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error but continue without sound
                 System.Diagnostics.Debug.WriteLine($"Error playing sound: {ex.Message}");
             }
         }
 
-        private async void GetResponseFromApi()
+        /// <summary>
+        /// Displays the answer in the UI
+        /// </summary>
+        /// <param name="answer">The 8-ball reading</param>
+        /// <param name="responseType">The response type (positive, negative, neutral)</param>
+        private void ShowAnswer(string answer, string responseType)
+        {
+            // Reset animation state
+            _isAnimating = false;
+            AskAgainButton.IsEnabled = true;
+
+            // Hide animation elements
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+            if (_loadingAnimation != null) _loadingAnimation.Stop();
+            AnimationContainer.Visibility = Visibility.Collapsed;
+
+            // Show static image
+            StaticBallImage.Visibility = Visibility.Visible;
+
+            // Set answer text - no more custom splitting needed since TextWrapping is now Wrap
+            AnswerText.Text = answer;
+
+            // Update response text
+            ResponseTextBlock.Text = answer;
+
+            // Set response type with appropriate emoji
+            string emoji = responseType.ToLower() switch
+            {
+                "positive" => "✅",
+                "negative" => "❌",
+                "neutral" => "⚠️",
+                _ => "❓"
+            };
+
+            ResponseTypeTextBlock.Text = $"{emoji} {responseType}";
+
+            // Show and animate triangle appearance
+            AnswerTriangle.Visibility = Visibility.Visible;
+            _triangleEntranceAnimation?.Begin();
+        }
+        #endregion
+
+        #region API Interaction
+        /// <summary>
+        /// Gets a response from the 8-Ball API asynchronously
+        /// </summary>
+        private async void GetResponseFromApiAsync()
         {
             try
             {
-                // Get new EightBallApiService instance
+                // Create a new API service instance
                 var apiService = new Services.EightBallApiService(_pluginInstance.GetType());
 
-                // Get response based on settings
-                EightBallResponse? response;
+                try
+                {
+                    // Get response based on settings
+                    EightBallResponse? response;
 
-                if (_useBiasedResponse)
-                {
-                    response = await apiService.GetBiasedResponseAsync(_question);
-                }
-                else
-                {
-                    response = await apiService.GetRandomResponseAsync();
-                }
-
-                // Display the response
-                if (response != null)
-                {
-                    // Truncate to fit in triangle if needed
-                    string displayText = response.Reading;
-                    if (displayText.Length > 10)
+                    if (_useBiasedResponse)
                     {
-                        displayText = SplitToFitTriangle(displayText);
+                        response = await apiService.GetBiasedResponseAsync(_question);
+                    }
+                    else
+                    {
+                        response = await apiService.GetRandomResponseAsync();
                     }
 
-                    ShowAnswer(displayText, response.Type);
-                    ResponseTextBlock.Text = response.Reading;
-
-                    // Clean up
-                    apiService.Dispose();
+                    // Display the response
+                    if (response != null)
+                    {
+                        ShowAnswer(response.Reading, response.Type);
+                    }
+                    else
+                    {
+                        // Handle API error
+                        ShowAnswer("ERROR", "Unknown");
+                        ResponseTextBlock.Text = "Could not get a response. Please try again later.";
+                    }
                 }
-                else
+                finally
                 {
-                    // Handle error
-                    ShowAnswer("ERROR", "Unknown");
-                    ResponseTextBlock.Text = "Could not get a response. Please try again later.";
+                    // Ensure we dispose of the API service
+                    apiService.Dispose();
                 }
             }
             catch (Exception ex)
@@ -225,127 +322,84 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
                 ResponseTextBlock.Text = $"An error occurred: {ex.Message}";
             }
         }
+        #endregion
 
-        private void ShowAnswer(string answer, string responseType)
-        {
-            // Hide animation if it was playing
-            AnimationContainer.Visibility = Visibility.Collapsed;
-            
-            // Show static image and answer triangle
-            StaticBallImage.Visibility = Visibility.Visible;
-            AnswerTriangle.Visibility = Visibility.Visible;
-            
-            // Set answer text
-            AnswerText.Text = SplitToFitTriangle(answer);
-            
-            // Update response text and type
-            ResponseTextBlock.Text = answer;
-            
-            // Set response type with emoji
-            string emoji = responseType.ToLower() switch
-            {
-                "positive" => "✅",
-                "negative" => "❌",
-                "neutral" => "⚠️",
-                _ => "❓"
-            };
-            
-            ResponseTypeTextBlock.Text = $"{emoji} {responseType}";
-        }
+        #endregion
 
-        private string SplitToFitTriangle(string text)
-        {
-            // For longer phrases like "Concentrate and ask again", we need better splitting
-            if (text.Length <= 10) return text;
-
-            // Find spaces to split into multiple lines
-            string[] words = text.Split(' ');
-
-            if (words.Length <= 1)
-            {
-                // If only 1 word, just return with possible truncation
-                return text.Length > 15 ? text.Substring(0, 12) + "..." : text;
-            }
-
-            // Try to balance the lines for better visual appearance
-            var result = new System.Text.StringBuilder();
-            int currentLineLength = 0;
-            int maxLineLength = 12; // Shorter lines for triangle
-            int lineCount = 0;
-            
-            for (int i = 0; i < words.Length; i++)
-            {
-                string word = words[i];
-
-                // If adding this word would exceed max line length or we already have 3 lines
-                if ((currentLineLength + word.Length > maxLineLength) || 
-                    (currentLineLength > 0 && lineCount >= 2))
-                {
-                    // Start a new line
-                    result.Append("\n");
-                    currentLineLength = 0;
-                    lineCount++;
-                    
-                    // Limit to 3 lines maximum to fit in triangle
-                    if (lineCount >= 3)
-                    {
-                        // If we're cutting off, add ellipsis
-                        if (i < words.Length - 1)
-                        {
-                            result.Append("...");
-                        }
-                        break;
-                    }
-                }
-                else if (i > 0 && currentLineLength > 0)
-                {
-                    // Add space between words (not at the start of a line)
-                    result.Append(" ");
-                    currentLineLength++;
-                }
-
-                // For very long words, truncate them
-                if (word.Length > maxLineLength && currentLineLength == 0)
-                {
-                    word = word.Substring(0, Math.Min(word.Length, maxLineLength - 3)) + "...";
-                }
-
-                result.Append(word);
-                currentLineLength += word.Length;
-            }
-
-            return result.ToString();
-        }
-
-        private void BallAnimation_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            // Animation ended, show the static image
-            AnimationContainer.Visibility = Visibility.Collapsed;
-            StaticBallImage.Visibility = Visibility.Visible;
-        }
-
+        #region Event Handlers
+        /// <summary>
+        /// Handles the Ask Again button click
+        /// </summary>
         private void AskAgainButton_Click(object sender, RoutedEventArgs e)
         {
-            // Always allow asking again, regardless of animation state
-            // Just ensure we're not in the middle of an active animation
+            TryAskAgain();
+        }
+
+        /// <summary>
+        /// Handles click on the 8-Ball display area
+        /// </summary>
+        private void BallDisplayArea_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TryAskAgain();
+        }
+
+        /// <summary>
+        /// Attempts to ask again if not currently animating
+        /// </summary>
+        private void TryAskAgain()
+        {
+            // Only allow asking again if not currently animating
             if (!_isAnimating)
             {
-                // Hide answer and show animation again
-                AnswerTriangle.Visibility = Visibility.Collapsed;
-
-                // Reset display
+                // Reset display texts
                 AnswerText.Text = "";
                 ResponseTextBlock.Text = "";
                 ResponseTypeTextBlock.Text = "";
 
-                // Start animation (or just get response if animations disabled)
-                StartAnimation();
+                // Hide triangle
+                AnswerTriangle.Visibility = Visibility.Collapsed;
+
+                // Start new animation and request
+                StartAnimationSequence();
             }
         }
 
+        /// <summary>
+        /// Handles the Close button click
+        /// </summary>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
+        /// <summary>
+        /// Handles Media Element animation completion (legacy support)
+        /// </summary>
+        private void BallAnimation_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            // Legacy handler for MediaElement - kept for backward compatibility
+            AnimationContainer.Visibility = Visibility.Collapsed;
+            StaticBallImage.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Handles keyboard shortcuts for the window
+        /// </summary>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Enter - Ask Again (only if not currently animating)
+            if (e.Key == Key.Enter && !_isAnimating && AskAgainButton.IsEnabled)
+            {
+                TryAskAgain();
+                e.Handled = true;
+            }
+            // Escape - Close
+            else if (e.Key == Key.Escape)
+            {
+                CloseButton_Click(sender, e);
+                e.Handled = true;
+            }
+        }
+        #endregion
     }
 }

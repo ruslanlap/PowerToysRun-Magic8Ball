@@ -1,6 +1,6 @@
-# 🔮 Magic 8-Ball Plugin v1.0.0
+# 🔮 Magic 8-Ball Plugin v1.0.2
 
-Initial release of the Magic 8-Ball plugin for PowerToys Run.
+Update release of the Magic 8-Ball plugin for PowerToys Run.
 
 ## ✨ Features
 
@@ -10,6 +10,11 @@ Initial release of the Magic 8-Ball plugin for PowerToys Run.
 - 🔊 Sound Effects - Hear the Magic 8-Ball shake when asking a question
 - 🖼️ Visual Magic 8-Ball Window - See your response appear in a dedicated window
 - 😀 Response Type Indicators - Responses are categorized with emojis as positive, negative, or neutral
+
+## 🐛 Bug Fixes and Improvements
+- Minor UI improvements
+- Performance optimizations
+- Stability enhancements
 
 ## 📥 Installation
 
