@@ -211,27 +211,11 @@ jobs:
           1. Download the ZIP file for your platform (x64 or ARM64)
           2. Extract to `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\`
           3. Restart PowerToys
-          4. Start using with `Alt+Space` then type `weather`
-          5. You'll need to get a free API key from [OpenWeatherMap](https://openweathermap.org/api)
-          
-          ## 🔍 Quick Commands
-          
-          | Command | Description |
-          |---------|-------------|
-          | `weather` | Show weather for default/current location |
-          | `weather London` | Show weather for a specific city |
-          | `weather London, UK` | Show weather with country code |
-          
-          ## 🙏 Acknowledgements
-          
-          Special thanks to:
-          - [hlaueriksson](https://github.com/hlaueriksson) for contributions and inspiration
-          - [OpenWeatherMap](https://openweathermap.org/) for providing the weather API
-          - [Microsoft PowerToys](https://github.com/microsoft/PowerToys) team for the amazing launcher
+          4. Start using with `Alt+Space` then type `magic`
           
           ## 🐛 Found a bug?
           
-          If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/ruslanlap/PowerToysRun-Weather/issues).
+          If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/issues).
           
           Made with ❤️ by [ruslanlap](https://github.com/ruslanlap)
           EOL

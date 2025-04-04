@@ -250,7 +250,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgements
 
 - [Microsoft PowerToys](https://github.com/microsoft/PowerToys) team for the amazing launcher
-- [EightBallAPI](https://www.eightballapi.com/) for providing the fortune-telling API
+- [![EightBallAPI](https://img.shields.io/badge/Powered%20by-EightBallAPI-9cf)](https://www.eightballapi.com/) for providing the fortune-telling API
 - All contributors who have helped improve this plugin
 
 ## 🛠️ Implementation Details
