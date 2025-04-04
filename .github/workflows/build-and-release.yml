@@ -1,4 +1,4 @@
-name: Build and Release Weather Plugin
+name: Build and Release Magic 8-Ball Plugin
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
           dotnet-version: '9.0.x'
       
       - name: Build
-        run: dotnet build Weather/Weather.sln -c Release -p:Platform="${{ matrix.platform }}"
+        run: dotnet build Magic8Ball/Magic8Ball.sln -c Release -p:Platform="${{ matrix.platform }}"
       
       - name: Get version
         id: get_version
@@ -52,7 +52,7 @@ jobs:
       
       - name: Debug Output
         run: |
-          Get-ChildItem -Path "Weather" -Recurse -Directory | Where-Object { $_.Name -eq "Release" } | ForEach-Object { Write-Host $_.FullName }
+          Get-ChildItem -Path "Magic8Ball" -Recurse -Directory | Where-Object { $_.Name -eq "Release" } | ForEach-Object { Write-Host $_.FullName }
         shell: pwsh
       
       - name: Create output directory
@@ -60,23 +60,23 @@ jobs:
       
       - name: Copy build output to artifacts directory
         run: |
-          $artifactDir = "artifacts/Weather-v${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}"
+          $artifactDir = "artifacts/Magic8Ball-v${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}"
           
           # Create the artifact directory
           New-Item -ItemType Directory -Force -Path $artifactDir
           
-          # Create Weather subfolder
-          New-Item -ItemType Directory -Force -Path "$artifactDir/Weather"
+          # Create Magic 8-Ball subfolder
+          New-Item -ItemType Directory -Force -Path "$artifactDir/Magic8Ball"
           
           # Define the direct path to the build output
-          $buildOutput = "Weather/Community.PowerToys.Run.Plugin.Weather/bin/${{ matrix.platform }}/Release"
+          $buildOutput = "Magic8Ball/Community.PowerToys.Run.Plugin.Magic8Ball/bin/${{ matrix.platform }}/Release"
           
           Write-Host "Using build output directory: $buildOutput"
           
           # Check if the directory exists
           if (-not (Test-Path $buildOutput)) {
             Write-Host "Build output directory not found at expected path. Searching for it..."
-            $buildOutput = Get-ChildItem -Path "Weather" -Recurse -Directory | 
+            $buildOutput = Get-ChildItem -Path "Magic8Ball" -Recurse -Directory | 
                            Where-Object { $_.Name -eq "Release" -and $_.FullName -like "*${{ matrix.platform }}*" } | 
                            Select-Object -First 1 -ExpandProperty FullName
             
@@ -98,7 +98,7 @@ jobs:
           $files = Get-ChildItem -Path $buildOutput -File
           if ($files.Count -gt 0) {
             Write-Host "Found $($files.Count) files in build output directory. Copying directly..."
-            Copy-Item -Path "$buildOutput/*" -Destination "$artifactDir/Weather" -Recurse -Force
+            Copy-Item -Path "$buildOutput/*" -Destination "$artifactDir/Magic8Ball" -Recurse -Force
             Write-Host "Files copied successfully"
           } else {
             # Look for a .NET runtime folder
@@ -108,7 +108,7 @@ jobs:
             
             if ($runtimeFolder) {
               Write-Host "Found runtime folder: $runtimeFolder"
-              Copy-Item -Path "$runtimeFolder/*" -Destination "$artifactDir/Weather" -Recurse -Force
+              Copy-Item -Path "$runtimeFolder/*" -Destination "$artifactDir/Magic8Ball" -Recurse -Force
               Write-Host "Files copied successfully from runtime folder"
             } else {
               # If no runtime folder, check for any subdirectories
@@ -116,7 +116,7 @@ jobs:
               if ($subDirs.Count -gt 0) {
                 $firstSubDir = $subDirs[0].FullName
                 Write-Host "No runtime folder found, but found subdirectory: $firstSubDir"
-                Copy-Item -Path "$firstSubDir/*" -Destination "$artifactDir/Weather" -Recurse -Force
+                Copy-Item -Path "$firstSubDir/*" -Destination "$artifactDir/Magic8Ball" -Recurse -Force
                 Write-Host "Files copied from first subdirectory"
               } else {
                 Write-Error "No files or subdirectories found in build output directory"
@@ -128,17 +128,17 @@ jobs:
       
       - name: Create ZIP archive
         run: |
-          $artifactDir = "artifacts/Weather-v${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}"
+          $artifactDir = "artifacts/Magic8Ball-v${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}"
           
           # Create the zip files with names that match the README.md download links
           if ("${{ matrix.platform }}" -eq "x64") {
-            $zipFile = "Weather-x64.zip"
+            $zipFile = "Magic8Ball-x64.zip"
           } else {
-            $zipFile = "Weather-ARM64.zip"
+            $zipFile = "Magic8Ball-ARM64.zip"
           }
           
           # Create the zip file
-          Compress-Archive -Path "$artifactDir/Weather" -DestinationPath "artifacts/$zipFile"
+          Compress-Archive -Path "$artifactDir/Magic8Ball" -DestinationPath "artifacts/$zipFile"
         shell: pwsh
       
       - name: Upload build artifacts
@@ -175,8 +175,8 @@ jobs:
       - name: Prepare artifacts for release
         run: |
           mkdir -p release-artifacts
-          cp downloaded-artifacts/build-artifacts-x64/*.zip release-artifacts/Weather-x64.zip || echo "Failed to copy x64 artifact"
-          cp downloaded-artifacts/build-artifacts-arm64/*.zip release-artifacts/Weather-ARM64.zip || echo "Failed to copy ARM64 artifact"
+          cp downloaded-artifacts/build-artifacts-x64/*.zip release-artifacts/Magic8Ball-x64.zip || echo "Failed to copy x64 artifact"
+          cp downloaded-artifacts/build-artifacts-arm64/*.zip release-artifacts/Magic8Ball-ARM64.zip || echo "Failed to copy ARM64 artifact"
           echo "Listing release artifacts:"
           ls -la release-artifacts
       
@@ -188,9 +188,9 @@ jobs:
         id: release_notes
         run: |
           cat > release_notes.md << 'EOL'
-          # 🌦️ Weather Plugin v${{ steps.get_version.outputs.VERSION }}
+          # 🌦️ Magic 8-Ball Plugin v${{ steps.get_version.outputs.VERSION }}
           
-          ![Weather Plugin Logo](https://raw.githubusercontent.com/ruslanlap/PowerToysRun-Weather/master/Assets/logo.png)
+          ![Magic 8-Ball Plugin Logo](https://raw.githubusercontent.com/ruslanlap/PowerToysRun-Magic8Ball/master/Assets/logo.png)
           
           ## ✨ What's New
           
@@ -243,12 +243,12 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Weather Plugin v${{ steps.get_version.outputs.VERSION }}
+          name: Magic 8-Ball Plugin v${{ steps.get_version.outputs.VERSION }}
           body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
           draft: false
           prerelease: false
           files: |
-            release-artifacts/Weather-x64.zip
-            release-artifacts/Weather-ARM64.zip
+            release-artifacts/Magic8Ball-x64.zip
+            release-artifacts/Magic8Ball-ARM64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

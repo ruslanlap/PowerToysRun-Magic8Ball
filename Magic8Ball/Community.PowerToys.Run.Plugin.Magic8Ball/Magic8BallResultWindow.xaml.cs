@@ -200,7 +200,7 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
                 {
                     // Truncate to fit in triangle if needed
                     string displayText = response.Reading;
-                    if (displayText.Length > 20)
+                    if (displayText.Length > 10)
                     {
                         displayText = SplitToFitTriangle(displayText);
                     }
@@ -242,37 +242,54 @@ namespace Community.PowerToys.Run.Plugin.Magic8Ball
         private string SplitToFitTriangle(string text)
         {
             // For longer phrases like "Concentrate and ask again", we need better splitting
-            if (text.Length <= 12) return text;
+            if (text.Length <= 10) return text;
 
             // Find spaces to split into multiple lines
             string[] words = text.Split(' ');
 
-            if (words.Length <= 2)
+            if (words.Length <= 1)
             {
-                // If only 1-2 words, just return with possible truncation
-                return text.Length > 18 ? text.Substring(0, 15) + "..." : text;
+                // If only 1 word, just return with possible truncation
+                return text.Length > 15 ? text.Substring(0, 12) + "..." : text;
             }
 
             // Try to balance the lines
             var result = new System.Text.StringBuilder();
             int currentLineLength = 0;
-            int maxLineLength = 12; // Shorter lines for triangle
-
+            int maxLineLength = 10; // Shorter lines for triangle
+            int lineCount = 0;
+            
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i];
 
-                if (currentLineLength + word.Length > maxLineLength)
+                // If adding this word would exceed max line length or we already have 3 lines
+                if ((currentLineLength + word.Length > maxLineLength) || 
+                    (currentLineLength > 0 && lineCount >= 3))
                 {
                     // Start a new line
                     result.Append("\n");
                     currentLineLength = 0;
+                    lineCount++;
+                    
+                    // Limit to 4 lines maximum to fit in triangle
+                    if (lineCount >= 4)
+                    {
+                        result.Append("...");
+                        break;
+                    }
                 }
-                else if (i > 0)
+                else if (i > 0 && currentLineLength > 0)
                 {
                     // Add space between words (not at the start of a line)
                     result.Append(" ");
                     currentLineLength++;
+                }
+
+                // For very long words, truncate them
+                if (word.Length > maxLineLength && currentLineLength == 0)
+                {
+                    word = word.Substring(0, Math.Min(word.Length, maxLineLength - 3)) + "...";
                 }
 
                 result.Append(word);

@@ -1,35 +1,35 @@
-# 🌦️ PowerToys Run: Weather Plugin
+# 🔮 PowerToys Run: Magic 8-Ball Plugin
 
 <div align="center">
-  <img src="Assets/Demo/demo-weather-widget.gif" alt="Weather Plugin Demo" width="650">
+  <img src="data/demo-magic8ball.gif" alt="Magic 8-Ball Plugin Demo" width="650">
   
   <p align="center">
-    <img src="Assets/logo.png" alt="Weather Icon" width="128" height="128">
+    <img src="data/logo.png" alt="Magic 8-Ball Icon" width="128" height="128">
   </p>
   
-  <h1>✨ Weather for PowerToys Run ✨</h1>
-  <h3>Get real-time weather information directly from PowerToys Run</h3>
+  <h1>✨ Magic 8-Ball for PowerToys Run ✨</h1>
+  <h3>Ask questions and receive fortune-telling responses directly from PowerToys Run</h3>
   
   ![PowerToys Compatible](https://img.shields.io/badge/PowerToys-Compatible-blue)
   ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ![Maintenance](https://img.shields.io/maintenance/yes/2025)
   ![C#](https://img.shields.io/badge/C%23-.NET-512BD4)
-  ![Version](https://img.shields.io/badge/version-1.0.1-brightgreen)
+  ![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)
   ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-  [![GitHub stars](https://img.shields.io/github/stars/ruslanlap/PowerToysRun-Weather)](https://github.com/ruslanlap/PowerToysRun-Weather/stargazers)
-  [![GitHub issues](https://img.shields.io/github/issues/ruslanlap/PowerToysRun-Weather)](https://github.com/ruslanlap/PowerToysRun-Weather/issues)
-  [![GitHub release (latest by date)](https://img.shields.io/github/v/release/ruslanlap/PowerToysRun-Weather)](https://github.com/ruslanlap/PowerToysRun-Weather/releases/latest)
-  [![GitHub all releases](https://img.shields.io/github/downloads/ruslanlap/PowerToysRun-Weather/total)](https://github.com/ruslanlap/PowerToysRun-Weather/releases)
+  [![GitHub stars](https://img.shields.io/github/stars/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/stargazers)
+  [![GitHub issues](https://img.shields.io/github/issues/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/issues)
+  [![GitHub release (latest by date)](https://img.shields.io/github/v/release/ruslanlap/PowerToysRun-Magic8Ball)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/latest)
+  [![GitHub all releases](https://img.shields.io/github/downloads/ruslanlap/PowerToysRun-Magic8Ball/total)](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases)
   ![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red)
   ![Awesome](https://img.shields.io/badge/Awesome-Yes-orange)
 </div>
 
 <div align="center">
-  <a href="https://github.com/ruslanlap/PowerToysRun-Weather/releases/download/v1.0.1/Weather-x64.zip">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.0/Magic8Ball-x64.zip">
     <img src="https://img.shields.io/badge/Download%20Latest%20Release-x64-blue?style=for-the-badge&logo=github" alt="Download Latest Release" />
   </a>
-  <a href="https://github.com/ruslanlap/PowerToysRun-Weather/releases/download/v1.0.1/Weather-ARM64.zip">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.0/Magic8Ball-ARM64.zip">
     <img src="https://img.shields.io/badge/Download%20Latest%20Release-ARM64-blue?style=for-the-badge&logo=github" alt="Download Latest Release" />
   </a>
 </div>
@@ -37,7 +37,6 @@
 ## 📋 Table of Contents
 
 - [📋 Overview](#-overview)
-- [🆕 What's New in v1.0.1](#-whats-new-in-v101)
 - [⚡ Easy Install](#-easy-install)
 - [✨ Features](#-features)
 - [🎬 Demo Gallery](#-demo-gallery)
@@ -48,30 +47,24 @@
 - [📊 Project Structure](#-project-structure)
 - [🤝 Contributing](#-contributing)
 - [❓ FAQ](#-faq)
-- [✨ Why You'll Love Weather Plugin](#-why-youll-love-weather-plugin)
+- [✨ Why You'll Love Magic 8-Ball Plugin](#-why-youll-love-magic-8-ball-plugin)
 - [📄 License](#-license)
 - [🙏 Acknowledgements](#-acknowledgements)
 - [🛠️ Implementation Details](#-implementation-details)
 
 ## 📋 Overview
 
-Weather is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/PowerToys) that allows you to quickly check weather conditions directly from your PowerToys Run interface. Simply type `weather` followed by a location to get real-time weather information, or set up favorite locations for instant access.
+Magic 8-Ball is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/PowerToys) that brings the classic fortune-telling toy to your keyboard. Simply type `magic` followed by a yes-or-no question to receive a mystical response directly from your PowerToys Run interface.
 
 <div align="center">
-  <img src="Assets/instruction.png" alt="PowerToys" width="850">
+  <img src="data/instruction.png" alt="PowerToys" width="850">
 </div>
-
-## 🆕 What's New in v1.0.1
-
-- 😎 **Temperature Feeling Emojis** - Added intuitive emoji indicators that show how the temperature feels
-- 🔧 **Improved UI** - Enhanced weather display with visual temperature indicators
-- 🐛 **Bug Fixes** - Various improvements and optimizations
 
 ## ⚡ Easy Install
 
 <div align="">
-  <a href="https://github.com/ruslanlap/PowerToysRun-Weather/releases/download/v1.0.1/Weather-x64.zip">
-    <img src="https://img.shields.io/badge/⬇️_DOWNLOAD-WEATHER_PLUGIN-blue?style=for-the-badge&logo=github" alt="Download Weather Plugin">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/download/v1.0.0/Magic8Ball-x64.zip">
+    <img src="https://img.shields.io/badge/⬇️_DOWNLOAD-MAGIC_8_BALL_PLUGIN-blue?style=for-the-badge&logo=github" alt="Download Magic 8-Ball Plugin">
   </a>
   
   <p>
@@ -79,49 +72,37 @@ Weather is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/P
     1. Download using the button above<br>
     2. Extract to <code>%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\</code><br>
     3. Restart PowerToys<br>
-    4. Start using with <code>Alt+Space</code> then type <code>weather</code>
+    4. Start using with <code>Alt+Space</code> then type <code>magic</code>
   </p>
 </div>
 
 ## ✨ Features
 
-- 🌍 **Location-based Weather** - Get weather for any city worldwide
-- 🏠 **Default Location** - Set your home location for quick access
-- ⭐ **Favorite Locations** - Save multiple locations for easy checking
-- 🧠 **Smart Geolocation** - Automatically detect your current location
-- 🌡️ **Temperature Units** - Choose between Celsius and Fahrenheit
-- 😎 **Temperature Feeling Emojis** - Intuitive visual indicators for temperature ranges
-- 🔍 **Detailed Information** - View comprehensive weather data including:
-  - Current temperature
-  - "Feels like" temperature
-  - Humidity percentage
-  - Wind speed and direction
-  - Weather condition with icon
-- 🖼️ **Visual Weather Window** - See detailed weather in a dedicated window
-- 🔄 **Auto-refresh** - Weather data is cached but refreshed regularly
-- 🔑 **API Key Management** - Easy setup with OpenWeatherMap API
+- 🎱 **Classic Magic 8-Ball Experience** - Ask yes-or-no questions and receive fortune-telling responses
+- 🧠 **Smart Biased Responses** - Optional sentiment analysis to provide more relevant answers
+- 🎬 **Animated Shaking Effect** - Watch the Magic 8-Ball shake before revealing your answer
+- 🔊 **Sound Effects** - Hear the Magic 8-Ball shake when asking a question
+- 🖼️ **Visual Magic 8-Ball Window** - See your response appear in a dedicated window with a visual Magic 8-Ball
+- 😀 **Response Type Indicators** - Responses are categorized with emojis as positive, negative, or neutral
+- ⚙️ **Customizable Settings** - Enable or disable animations, sound effects, and biased responses
 - 🌓 **Theme Support** - Works with both light and dark PowerToys themes
-- 🕒 **Location Time** - Displays the current time at the weather location
-- 🎨 **Beautiful Widget** - Elegant popup window with modern UI design that works like a mini weather widget
+- 🔄 **Ask Again** - Easily ask the same question again for a different response
+- 🎨 **Beautiful UI** - Elegant popup window with modern design that works like a mini fortune-telling toy
 
 ## 🎬 Demo Gallery
 
 <div align="center">
-  <h3>🌍 Search Weather by City</h3>
-  <p><img src="Assets/Demo/demo-weather-city.gif" width="650" alt="Weather by City Demo"/></p>
-  <p><i>Simply type <code>weather</code> followed by a city name</i></p>
+  <h3>🎱 Ask a Question</h3>
+  <p><img src="data/demo-magic8ball-ask.gif" width="650" alt="Ask Question Demo"/></p>
+  <p><i>Simply type <code>magic</code> followed by your yes-or-no question</i></p>
   
-  <h3>🏠 Default Location Weather</h3>
-  <p><img src="Assets/Demo/demo-weather-defaultlocation.gif" width="650" alt="Default Location Demo"/></p>
-  <p><i>Just type <code>weather</code> to see your default location's weather</i></p>
+  <h3>🧠 Biased Responses</h3>
+  <p><img src="data/demo-magic8ball-biased.gif" width="650" alt="Biased Response Demo"/></p>
+  <p><i>Use Ctrl+Enter to get a response that analyzes your question</i></p>
 
-  <h3>⭐ Favorite Locations</h3>
-  <p><img src="Assets/Demo/demo-weather-favorite.gif" width="650" alt="Favorite Locations Demo"/></p>
-  <p><i>Quickly access weather for your saved favorite locations</i></p>
-
-  <h3>🖼️ Weather Details Window</h3>
-  <p><img src="Assets/Demo/demo-weather-widget.gif" width="650" alt="Weather Widget Demo"/></p>
-  <p><i>View detailed weather information in a dedicated window</i></p>
+  <h3>🖼️ Magic 8-Ball Window</h3>
+  <p><img src="data/demo-magic8ball-window.gif" width="650" alt="Magic 8-Ball Window Demo"/></p>
+  <p><i>View your fortune in a dedicated Magic 8-Ball window</i></p>
 </div>
 
 ## 🚀 Installation
@@ -130,21 +111,19 @@ Weather is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/P
 
 - [Microsoft PowerToys](https://github.com/microsoft/PowerToys/releases) installed
 - Windows 10 or later
-- [OpenWeatherMap API key](https://openweathermap.org/api) (free tier is sufficient)
 
 ### 📥 Installation Steps
 
-1. Download the latest release from the [Releases page](https://github.com/ruslanlap/PowerToysRun-Weather/releases/latest)
+1. Download the latest release from the [Releases page](https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/latest)
 2. Extract the ZIP file to:
    ```
    %LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\
    ```
 3. Restart PowerToys
-4. Open PowerToys Run and type `weather` to access the plugin
-5. Enter your OpenWeatherMap API key in the plugin settings
+4. Open PowerToys Run and type `magic` to access the plugin
 
 <div align="center">
-  <a href="https://github.com/ruslanlap/PowerToysRun-Weather/releases/latest">
+  <a href="https://github.com/ruslanlap/PowerToysRun-Magic8Ball/releases/latest">
     <img src="https://img.shields.io/badge/⬇️_Download-Latest_Release-blue?style=for-the-badge&logo=github" alt="Download Latest Release">
   </a>
 </div>
@@ -158,29 +137,26 @@ Weather is a plugin for [Microsoft PowerToys Run](https://github.com/microsoft/P
 
 | Command | Description | Example |
 |---------|-------------|---------|
-| `weather` | Show weather for default or current location | `weather` |
-| `weather <city>` | Show weather for a specific city | `weather London` |
-| `weather <city>, <country>` | Show weather for a specific city with country code | `weather London, UK` |
+| `magic` | Show Magic 8-Ball instructions | `magic` |
+| `magic <question>` | Ask a yes-or-no question | `magic Will I win the lottery?` |
 
 </div>
 
 ### 🎯 Quick Tips
 
-- Press <kbd>Enter</kbd> on a weather result to open the detailed weather window
-- Right-click on a weather result for additional options
-- Set your favorite locations in the plugin settings for quick access
-- The plugin caches weather data to minimize API calls
-- Weather data is automatically refreshed when needed
+- Press <kbd>Enter</kbd> on a question to get a random response
+- Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to get a biased response based on your question
+- Right-click on a question for additional options
+- Click "Ask Again" in the Magic 8-Ball window to get another response
+- Customize plugin settings in PowerToys Settings
 
 ## 📁 Data Storage
 
-The Weather plugin stores the following data locally:
+The Magic 8-Ball plugin stores the following settings locally:
 
-- Your OpenWeatherMap API key
-- Default location
-- Favorite locations
-- Temperature unit preference (Celsius/Fahrenheit)
-- Cached weather data (temporary)
+- Animation preference (enabled/disabled)
+- Sound effects preference (enabled/disabled)
+- Biased responses preference (enabled/disabled)
 
 All settings are stored securely in the PowerToys settings file.
 
@@ -188,14 +164,14 @@ All settings are stored securely in the PowerToys settings file.
 
 1. Clone the repository:
    ```
-   git clone https://github.com/ruslanlap/PowerToysRun-Weather.git
+   git clone https://github.com/ruslanlap/PowerToysRun-Magic8Ball.git
    ```
 
 2. Open the solution in Visual Studio 2022 or later
 
 3. Build the solution:
    ```
-   dotnet build Weather/Weather.sln
+   dotnet build Magic8Ball/Magic8Ball.sln
    ```
 
 4. Run the build-and-zip script to create installation packages:
@@ -206,16 +182,19 @@ All settings are stored securely in the PowerToys settings file.
 ## 📊 Project Structure
 
 ```
-Weather/
-├── Community.PowerToys.Run.Plugin.Weather/
-│   ├── Images/                  # Plugin icons
+Magic8Ball/
+├── Community.PowerToys.Run.Plugin.Magic8Ball/
+│   ├── Images/                  # Plugin icons and animations
+│   ├── Sounds/                  # Sound effects
 │   ├── Main.cs                  # Main plugin logic
-│   ├── WeatherResultWindow.xaml # Weather details window
+│   ├── Magic8BallResultWindow.xaml # Magic 8-Ball window
 │   ├── plugin.json             # Plugin metadata
 │   └── ...
-├── Community.PowerToys.Run.Plugin.Weather.UnitTests/
-│   └── ...                      # Unit tests
-└── Weather.sln                  # Solution file
+├── Services/
+│   ├── EightBallApiService.cs   # API service for responses
+├── Models/
+│   ├── EightBallResponse.cs     # Response data model
+└── Magic8Ball.sln              # Solution file
 ```
 
 ## 🤝 Contributing
@@ -233,44 +212,43 @@ Please make sure to update tests as appropriate.
 ### Contributors
 
 - [ruslanlap](https://github.com/ruslanlap) - Project creator and maintainer
-- [hlaueriksson](https://github.com/hlaueriksson) - Contributor and inspiration
 
 ## ❓ FAQ
 
 <details>
-<summary><b>How do I get an OpenWeatherMap API key?</b></summary>
-<p>Visit <a href="https://openweathermap.org/api">OpenWeatherMap</a>, create a free account, and generate an API key. The free tier allows up to 1,000 API calls per day, which is more than enough for personal use.</p>
+<summary><b>Does the plugin require internet access?</b></summary>
+<p>The plugin works best with internet access to fetch responses from the 8Ball API, but it also has a built-in fallback system that works offline.</p>
 </details>
 
 <details>
-<summary><b>Why does the plugin need my location?</b></summary>
-<p>The plugin uses your location only to provide weather information for your current area when no specific location is requested. This is optional - you can set a default location instead.</p>
+<summary><b>How do I enable or disable animations?</b></summary>
+<p>Open PowerToys Settings, navigate to PowerToys Run > Plugins > Magic 8-Ball, and toggle the "Enable animations" option.</p>
 </details>
 
 <details>
-<summary><b>How often is the weather data updated?</b></summary>
-<p>Weather data is cached for 30 minutes to reduce API calls. After that time, new data will be fetched automatically.</p>
+<summary><b>What's the difference between regular and biased responses?</b></summary>
+<p>Regular responses are completely random. Biased responses analyze your question to provide more contextually relevant answers based on the sentiment of your question.</p>
 </details>
 
 <details>
-<summary><b>Can I use this plugin offline?</b></summary>
-<p>The plugin requires internet access to fetch weather data. However, it will display cached data if available when offline.</p>
+<summary><b>Can I customize the responses?</b></summary>
+<p>Not in the current version, but this is planned for a future update.</p>
 </details>
 
 <details>
-<summary><b>How can I change from Celsius to Fahrenheit?</b></summary>
-<p>Open the plugin settings by typing "weather settings" in PowerToys Run, then toggle the temperature unit option.</p>
+<summary><b>Why does the plugin need sound permissions?</b></summary>
+<p>The plugin uses sound effects to enhance the Magic 8-Ball experience. You can disable these in the settings if preferred.</p>
 </details>
 
-## ✨ Why You'll Love Weather Plugin
+## ✨ Why You'll Love Magic 8-Ball Plugin
 
-- **Saves Time**: Check the weather without opening a browser or app
+- **Fun Distraction**: Take a break and consult the Magic 8-Ball for life's important (or not so important) decisions
 - **Keyboard-Centric**: Perfect for keyboard power users
-- **Customizable**: Set your preferred locations and units
-- **Fast**: Instant access to weather information
+- **Customizable**: Set your preferred animation and sound settings
+- **Fast**: Instant access to fortune-telling wisdom
 - **Beautiful**: Clean, modern UI that matches PowerToys style
-- **Privacy-Focused**: No tracking, only uses location when needed
 - **Resource-Efficient**: Lightweight with minimal system impact
+- **Nostalgic**: Brings back the classic Magic 8-Ball experience in a modern way
 
 ## 📄 License
 
@@ -279,12 +257,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgements
 
 - [Microsoft PowerToys](https://github.com/microsoft/PowerToys) team for the amazing launcher
-- [OpenWeatherMap](https://openweathermap.org/) for providing the weather API
+- [EightBallAPI](https://www.eightballapi.com/) for providing the fortune-telling API
 - All contributors who have helped improve this plugin
 
 ## 🛠️ Implementation Details
 
-The Weather plugin is built using:
+The Magic 8-Ball plugin is built using:
 
 - C# and .NET
 - WPF for the UI components
@@ -294,19 +272,19 @@ The Weather plugin is built using:
 
 The plugin implements several PowerToys Run interfaces:
 - `IPlugin` - Core plugin functionality
+- `IDelayedExecutionPlugin` - Support for delayed execution
 - `IContextMenu` - Right-click context menu
 - `IDisposable` - Resource cleanup
-- `IPluginI18n` - Internationalization support
 - `ISettingProvider` - Settings management
 
 ### Roadmap
 
-- [ ] Multiple day forecast
-- [ ] Weather alerts and notifications
-- [ ] More unit options (wind speed, pressure)
-- [ ] Custom themes for weather window
-- [ ] Additional weather providers
-- [ ] Offline mode improvements
-- [ ] Location autocomplete
-- [ ] Weather maps integration
-# PowerToysRun-Magic8Ball
+- [ ] Custom response sets
+- [ ] Multiple language support
+- [ ] More animation options
+- [ ] History of past questions and answers
+- [ ] Sharing responses with friends
+- [ ] Advanced question analysis
+- [ ] Voice input for questions
+- [ ] Voice output for responses
+- [ ] Custom themes for Magic 8-Ball window
